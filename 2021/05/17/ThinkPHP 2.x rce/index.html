@@ -507,9 +507,9 @@ kubernetes already installed
 thinkphp-2-rce is going to be installed
 node port 30006 is allocated for service in vulns_app&#x2F;php&#x2F;thinkphp-2-rce&#x2F;thinkphp-2-rce-web-service.yaml
 applying yamls&#x2F;k8s_metarget_namespace.yaml
-applying data&#x2F;cve-2018-19518-web-deployment.yaml
-applying data&#x2F;cve-2018-19518-web-service.yaml
-cve-2018-19518 successfully installed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+applying data&#x2F;thinkphp-2-rce-web-deployment.yaml
+applying data&#x2F;thinkphp-2-rce-web-service.yaml
+thinkphp-2-rce successfully installed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="0x02-分析学习"><a href="#0x02-分析学习" class="headerlink" title="0x02 分析学习"></a>0x02 分析学习</h2><p>首先对于该漏洞的发掘和利用，首先应该查找该函数的位置，然后查看该该函数是否使用了/e修饰符，然后再分析可用参数，如果存在则分析是否能进行传参利用。通过以下语句进行查找。</p>
 <pre class="line-numbers language-none"><code class="language-none">find . -name &#39;*.php&#39; | xargs grep -n &#39;preg_replace&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
