@@ -15571,7 +15571,7 @@ $ %ff %db
 		<span class="token keyword">else</span><span class="token punctuation">&#123;</span>
 		<span class="token variable">$a</span><span class="token operator">=</span><span class="token string single-quoted-string">'%'</span><span class="token operator">.</span><span class="token variable">$hex_i</span><span class="token punctuation">;</span>
 		<span class="token variable">$b</span><span class="token operator">=</span><span class="token string single-quoted-string">'%'</span><span class="token operator">.</span><span class="token variable">$hex_j</span><span class="token punctuation">;</span>
-		<span class="token variable">$c</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token class-name">urldecode</span><span class="token punctuation">(</span><span class="token variable">$b</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//修改的地方将'^'更改承了'|'</span>
+		<span class="token variable">$c</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token class-name">urldecode</span><span class="token punctuation">(</span><span class="token variable">$b</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//修改的地方将'^'更改成了'|'</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">ord</span><span class="token punctuation">(</span><span class="token variable">$c</span><span class="token punctuation">)</span><span class="token operator">>=</span><span class="token number">32</span><span class="token operator">&amp;</span><span class="token function">ord</span><span class="token punctuation">(</span><span class="token variable">$c</span><span class="token punctuation">)</span><span class="token operator">&lt;=</span><span class="token number">126</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 			<span class="token variable">$contents</span><span class="token operator">=</span><span class="token variable">$contents</span><span class="token operator">.</span><span class="token variable">$c</span><span class="token operator">.</span><span class="token string double-quoted-string">" "</span><span class="token operator">.</span><span class="token variable">$a</span><span class="token operator">.</span><span class="token string double-quoted-string">" "</span><span class="token operator">.</span><span class="token variable">$b</span><span class="token operator">.</span><span class="token string double-quoted-string">"\n"</span><span class="token punctuation">;</span>
 		<span class="token punctuation">&#125;</span>
@@ -18492,7 +18492,7 @@ z %60 %3a
 <pre class="line-numbers language-none"><code class="language-none">数组 Array &lt;&#x3D;&gt; 数组[]
 &#39;&#39;.[] &#x3D;&#x3D; &#39;Array&#39;
 &#39;Array&#39;&#123;0&#125; &#x3D;&#x3D; &#39;A&#39;
-&#39;Array&#39;&#123;3&#125; &#x3D;&#x3D; &#39;A&#39;
+&#39;Array&#39;&#123;3&#125; &#x3D;&#x3D; &#39;a&#39;
 $_ &#x3D; &#39;&#39;.[]; $_&#123;&#39;&#39;&#125; &#x3D;&#x3D;&#x3D; &#39;A&#39;
 
 所以羽师傅的payload就好理解了
@@ -19129,7 +19129,7 @@ v1<span class="token operator">=</span><span class="token number">1</span><span 
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">66.6k</span>&nbsp;字
+                class="white-color">66.7k</span>&nbsp;字
             
             
             

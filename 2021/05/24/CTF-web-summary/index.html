@@ -477,7 +477,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.7k
+                    3.8k
                 </div>
                 
 
@@ -852,6 +852,14 @@ main<span class="token punctuation">(</span><span class="token punctuation">)</s
 <p>当我们拿到这道题的时候发现数字没有被过滤掉，那么我们就可以精准的匹配到/bin/base64，/???/????64。</p>
 <p>payload：</p>
 <pre class="line-numbers language-none"><code class="language-none">?c &#x3D; &#x2F;???&#x2F;????64 ????.??? &#x2F;&#x2F; &#x2F;bin&#x2F;base64 flag.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>知识点：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">如果我们发送一个上传文件的post包，php会将我们上传的文件保存在临时的文件夹下，并且默认的文件目录是&#x2F;tmp&#x2F;phpxxxxxx。
+文件名最后的6个字符是随机的大小写字母，而且最后一个字符大概率是大写字母。
+容易想到的匹配方式就是利用？
+进行匹配，即???&#x2F;?????????，然而这不一定会匹配到我们上传的文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 <p>当然在P神的文章中我们可以学习一些通配符的技巧，其实跟正则有点类似，理解起来也不困难。P神不愧是大佬，看他的文章确实很涨“姿势”。</p>
 
                 
@@ -1470,7 +1478,7 @@ main<span class="token punctuation">(</span><span class="token punctuation">)</s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">66.6k</span>&nbsp;字
+                class="white-color">66.7k</span>&nbsp;字
             
             
             
