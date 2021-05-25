@@ -477,14 +477,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
+                    3.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
+                    15 分
                 </div>
                 
 
@@ -843,7 +843,16 @@ main<span class="token punctuation">(</span><span class="token punctuation">)</s
 <p><strong>知识点：</strong></p>
 <pre class="line-numbers language-none"><code class="language-none">bin为binary的简写，主要放置一些系统的必备执行档例如:cat、cp、chmod df、dmesg、gzip、kill、ls、mkdir、more、mount、rm、su、tar、base64等。
 我们日常直接使用的cat或者ls等等都其实是简写，例如ls完整全称应该是&#x2F;bin&#x2F;ls<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>这样我们可以通过用’?’模糊查询来进行读取文件</p>
+<p>这样我们可以通过用’?’模糊查询来进行读取文件，参考一下P神的<a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html">无字母数字webshell之提高篇</a>，这篇文章有聊到当我们不知道不知道linux的文件名或者目录名的时候甚至在某些字符被过滤掉的时候，我们可以使用linux的glob通配符：</p>
+<ul>
+<li>*  可以代替0个及以上任意字符</li>
+<li>?   可以代表1个任意字符</li>
+</ul>
+<p>那么当我们执行/bin/base64的时候我们可以这样去执行/???/??????，前提是’?’只能匹配一个任意字符，那么问号的数量就是我们文件名或者目录名的字符数量，如果在在某个目录下同时存在两个或者多个字符数相同的文件时就会匹配到多个文件，则不会精准匹配到我们想要的，所以我们需要进行观察看它是否与其他有什么区别。</p>
+<p>当我们拿到这道题的时候发现数字没有被过滤掉，那么我们就可以精准的匹配到/bin/base64，/???/????64。</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">?c &#x3D; &#x2F;???&#x2F;????64 ????.??? &#x2F;&#x2F; &#x2F;bin&#x2F;base64 flag.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>当然在P神的文章中我们可以学习一些通配符的技巧，其实跟正则有点类似，理解起来也不困难。P神不愧是大佬，看他的文章确实很涨“姿势”。</p>
 
                 
             </div>
@@ -1461,7 +1470,7 @@ main<span class="token punctuation">(</span><span class="token punctuation">)</s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">66.2k</span>&nbsp;字
+                class="white-color">66.6k</span>&nbsp;字
             
             
             
